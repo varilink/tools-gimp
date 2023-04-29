@@ -1,0 +1,8 @@
+version: "3.6"
+
+services:
+
+  gimp:
+
+    build: tools/gimp
+    network_mode: none
