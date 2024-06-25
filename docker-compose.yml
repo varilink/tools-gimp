@@ -4,3 +4,6 @@ services:
 
     build: tools/gimp
     network_mode: none
+    volumes:
+      - ./wordpress/gimp/:/gimp/
+      - ./wordpress/media/:/media/

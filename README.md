@@ -12,7 +12,21 @@ Tool for using GIMP batch mode to generate images that are transformed from sour
 
 To install this tool in projects, add it as a Git submodule with the submodule path tools/gimp. The tool is implemented as a Docker Compose service. Add the path to its `docker-compose.yml` file to the paths defined by the `COMPOSE_FILE` Docker Compose environment variable in the project's Docker Compose `.env` file.
 
-In the project's master `docker-compose.yml` file you must then extend the `gimp` service provided by this tool so that the `.scm` script or scripts that you want to execute are in the `/gimp` folder for that service's containers. You also need to map the source images and the location(s) for distribution images into the container, exactly where is dictated by your `.scm` script or scripts.
+
+This tool implements the following volume mappings for it to use within your project:
+```yaml
+volumes:
+  - ./wordpress/gimp/:/gimp/
+  - ./wordpress/media/:/media/
+```
+
+Typically you should setup your website's Docker Compose project in order to use these volumes as follows:
+
+- Follow the convention of having your website's WordPress repository as a submodule of its Docker Compose project at the path `wordpress`.
+
+- Within your website's WordPress repository, create a `gimp` directory that contains one or more `.scm` scripts and the source files they act upon. The path of source files relative to the scripts is whatever you want it to be, so long as the scripts refer to the source files correctly.
+
+- Within your website's WordPress repository, create a `media` directory that will contain the generated images produced by running your `.scm` script or scripts. Configure Git to ignore these generated images.
 
 ### Run
 
